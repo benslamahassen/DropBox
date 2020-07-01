@@ -36,7 +36,7 @@ class User implements UserInterface, \Serializable
     private $username;
 
     /**
-     * @ORM\OneToMany(targetEntity=File::class, mappedBy="user_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=PdfFile::class, mappedBy="user_id", orphanRemoval=true)
      */
     private $files;
 
@@ -124,14 +124,14 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return Collection|File[]
+     * @return Collection|PdfFile[]
      */
     public function getFiles(): Collection
     {
         return $this->files;
     }
 
-    public function addFile(File $file): self
+    public function addFile(PdfFile $file): self
     {
         if (!$this->files->contains($file)) {
             $this->files[] = $file;
@@ -141,7 +141,7 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function removeFile(File $file): self
+    public function removeFile(PdfFile $file): self
     {
         if ($this->files->contains($file)) {
             $this->files->removeElement($file);
