@@ -7,8 +7,13 @@
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         {% endblock %}
     </head>
-    <body>
-        <div class="container">
+    <body style="height: 100vh;">
+        {% if app.user %}
+            <div class="container mb-3">
+                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        {% endif %}
+        <div class="container h-100">
             {% block body %}{% endblock %}
         </div>
         {% block javascripts %}
