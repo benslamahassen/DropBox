@@ -1,6 +1,7 @@
 {% extends "base.html.twig" %}
 {% block body %}
     {% if files == true %}
+        <p>You have {{ files|length }} uploaded.</p>
         {% for file in files %}
             <div> {{ file.name }} </div>
         {% endfor %}
