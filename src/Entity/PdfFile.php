@@ -29,7 +29,7 @@ class PdfFile
     /**
      * @Vich\UploadableField(mapping="user_file", fileNameProperty="name", size="size")
      * @Assert\File{
-     *      maxSize="2M",
+     *      maxSize="8M",
      * }
      * @var File|null
      */
