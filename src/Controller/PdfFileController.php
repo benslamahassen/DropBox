@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\PdfFile;
 use App\Form\PdfFileType;
+use App\Repository\PdfFileRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,12 +29,6 @@ class PdfFileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $uploaded_file = $form['file']->getData();
             $extension = $uploaded_file->getClientOriginalExtension();
-            if ($extension != 'pdf') {
-                return $this->render('pdf_file/index.html.twig', [
-                    'error' => 'Please upload a valid PDF',
-                    'form' => $form->createView()
-                ]);
-            }
             $pdf_file->setExtension($extension);
             $pdf_file->setUserId($this->getUser());
             $pdf_file->setFile($uploaded_file);
@@ -48,5 +43,27 @@ class PdfFileController extends AbstractController
         return $this->render('pdf_file/index.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/download/{id}",name="pdf_download")
+     * @param $id
+     * @param PdfFileRepository $pdfFileRepository
+     * @return Response
+     */
+    public function download($id, PdfFileRepository $pdfFileRepository)
+    {
+        $file = $pdfFileRepository->findOneBy(['id' => $id ]);
+
+        $response = new Response();
+        $response->headers->set('Content-type', 'application/octet-stream');
+        $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', $file->getName() ));
+        $response->setContent(file_get_contents($this->getParameter('kernel.project_dir') ."/public/files/" . $file->getName()));
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Transfer-Encoding', 'binary');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', '0');
+        return $response;
+
     }
 }
