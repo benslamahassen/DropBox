@@ -3,7 +3,7 @@
 {% block body %}
     <div class="d-flex flex-column justify-content-center align-items-center h-100">
         {% if error %}
-            <div class="alert alert-danger">{{ dump(error.messageData) }}</div>
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
         <div class="card" style="width: 40vw">
             <div class="card-body">
