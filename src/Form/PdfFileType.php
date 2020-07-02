@@ -15,7 +15,7 @@ class PdfFileType extends AbstractType
     {
         $builder
             ->add('file', VichFileType::class, [
-                'required' => false,
+                'required' => true,
                 'allow_delete' => true,
                 'download_uri' => true,
                 'download_label' => true,
