@@ -2,6 +2,7 @@
 {% block body %}
     {% if files == true %}
         <p>You have {{ files|length }} uploaded.</p>
+        <a href="{{ path('create_pdf') }}">Upload new file here</a>
         {% for file in files %}
             <div> {{ file.name }} </div>
         {% endfor %}
