@@ -22,15 +22,26 @@ class PdfFileController extends AbstractController
     {
         $pdf_file = new PdfFile();
         $form = $this->createForm(PdfFileType::class, $pdf_file);
+
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $uploaded_file = $form['file']->getData();
-            $pdf_file->setExtension($uploaded_file->getClientOriginalExtension());
+            $extension = $uploaded_file->getClientOriginalExtension();
+            if ($extension != 'pdf') {
+                return $this->render('pdf_file/index.html.twig', [
+                    'error' => 'Please upload a valid PDF',
+                    'form' => $form->createView()
+                ]);
+            }
+            $pdf_file->setExtension($extension);
             $pdf_file->setUserId($this->getUser());
             $pdf_file->setFile($uploaded_file);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($pdf_file);
             $entityManager->flush();
+
             return $this->redirectToRoute('home');
         }
 
