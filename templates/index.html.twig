@@ -1,12 +1,33 @@
 {% extends "base.html.twig" %}
 {% block body %}
     {% if files == true %}
-        <p>You have {{ files|length }} uploaded.</p>
-        <a href="{{ path('create_pdf') }}">Upload new file here</a>
-        {% for file in files %}
-            <div> {{ file.name }} </div>
-        {% endfor %}
-    {% else  %}
+        <div class="row my-4">
+            <div class="col-8">
+                <h1 class="text-left">You have {{ files|length }} uploaded files.</h1>
+            </div>
+            <div class="col-4">
+                <a class="btn btn-outline-success" href="{{ path('create_pdf') }}">Upload a new file here</a>
+            </div>
+        </div>
+        <div class="row justify-content-start align-items-baseline">
+            {% for file in files %}
+                <div class="col-5 m-2">
+                    <div class="card" style="height: 22vh !important;">
+                        <div class="card-header">
+                            {{ file.name }}
+                        </div>
+                        <div class="card-body">
+                            Size: {{ file.size | formatBytes(2) }}
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-warning">Rename</button>
+                            <button class="btn btn-sm btn-danger float-right">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
         <h1>You have no files.</h1>
         <a href="{{ path('create_pdf') }}">Upload new file here</a>
     {% endif %}
