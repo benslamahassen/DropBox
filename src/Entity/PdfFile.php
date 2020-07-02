@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PdfFileRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -27,7 +28,9 @@ class PdfFile
 
     /**
      * @Vich\UploadableField(mapping="user_file", fileNameProperty="name", size="size")
-     *
+     * @Assert\File{
+     *      maxSize="2M",
+     * }
      * @var File|null
      */
     private $file;
