@@ -9,9 +9,13 @@
     </head>
     <body style="height: 100vh;">
         {% if app.user %}
-            <div class="container mb-3">
-                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-            </div>
+            <nav class="navbar navbar-dark bg-dark">
+                <span class="navbar-text">
+                    Welcome {{ app.user.username }}
+                </span>
+                <a class="btn btn-small btn-danger float-right" href="{{ path('app_logout') }}">Logout</a>
+            </nav>
+
         {% endif %}
         <div class="container h-100">
             {% block body %}{% endblock %}
