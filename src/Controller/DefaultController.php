@@ -9,7 +9,7 @@ class DefaultController extends AbstractController
 {
     public function index()
     {
-        return $this->render('index.html.twig');
+        return $this->render('security/login.html.twig');
     }
 
     /**
@@ -17,7 +17,7 @@ class DefaultController extends AbstractController
      */
     public function home()
     {
-        return $this->render('home.html.twig', [
+        return $this->render('index.html.twig', [
             'files' => [],
         ]);
     }
