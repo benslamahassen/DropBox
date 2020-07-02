@@ -7,6 +7,13 @@
             <h1>Welcome to DropBox</h1>
             <p> Create an account now! or Login</p>
         </div>
+        {% if error is defined %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        {% if message is defined %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endif %}
 
         <ul style="width: 40vw !important;" class="nav nav-pills nav-justified" id="userTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -22,16 +29,13 @@
         <div class="tab-content" id="signup-tab">
             <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab"
                  class=" h-100">
-                {% if error %}
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                {% endif %}
                 <div class="card" style="width: 40vw">
                     <div class="card-body">
                         <form method="post" action="{{ path('app_login') }}">
                             <h1 class="h3 mb-3 font-weight-normal">Login </h1>
                             <div class="form-group">
                                 <label for="email">Email address</label>
-                                <input type="email" value="{{ last_username }}" name="email" class="form-control"
+                                <input type="email" name="email" class="form-control"
                                        id="email">
                             </div>
                             <div class="form-group">
