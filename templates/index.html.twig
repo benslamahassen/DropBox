@@ -1,8 +1,11 @@
 {% extends "base.html.twig" %}
 {% block body %}
-    {% if not files == false%}
-
+    {% if files == true %}
+        {% for file in files %}
+            <div> {{ file.name }} </div>
+        {% endfor %}
     {% else  %}
+        <h1>You have no files.</h1>
         <a href="{{ path('create_pdf') }}">Upload new file here</a>
     {% endif %}
 {% endblock %}
