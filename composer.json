@@ -33,7 +33,8 @@
         "symfony/monolog-bundle": "^3.5",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*",
-        "symfony/twig-pack": "^1.0"
+        "symfony/twig-pack": "^1.0",
+        "symfony/var-dumper": "4.4.*"
     },
     "config": {
         "preferred-install": {
