@@ -9,6 +9,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=FileRepository::class)
+ * @Vich\Uploadable
  */
 class PdfFile
 {
@@ -25,7 +26,7 @@ class PdfFile
     private $name;
 
     /**
-     * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName", size="imageSize")
+     * @Vich\UploadableField(mapping="user_file", fileNameProperty="name", size="size")
      *
      * @var File|null
      */
