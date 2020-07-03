@@ -6,6 +6,7 @@ use App\Entity\PdfFile;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -17,9 +18,7 @@ class PdfFileType extends AbstractType
             ->add('file', VichFileType::class, [
                 'required' => true,
                 'allow_delete' => true,
-                'download_uri' => true,
-                'download_label' => true,
-                'asset_helper' => true,
+                'label' => 'Supported Formats (PDF,PNG,CSV)'
             ])
             ->add('save', SubmitType::class);
     }
