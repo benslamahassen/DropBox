@@ -70,6 +70,40 @@ class PdfFileController extends AbstractController
     }
 
     /**
+     * @Route("/rename",name="pdf_rename")
+     * @param Request $request
+     * @param Filesystem $filesystem
+     * @param PdfFileRepository $pdfFileRepository
+     * @return RedirectResponse
+     */
+
+    public function rename(Request $request, Filesystem $filesystem, PdfFileRepository $pdfFileRepository)
+    {
+        $id = $request->request->get('fileId');
+        $fileName = $request->request->get('fileName');
+        var_dump($id);
+        $oldFile = $pdfFileRepository->findOneBy(['id' => $id]);
+        $oldName = $oldFile->getName();
+        $root_dir = $this->getParameter('kernel.project_dir');
+        $absolute_path = $root_dir."/public/files/".$oldName;
+
+        try {
+            if ($filesystem->exists($absolute_path)) {
+                $filesystem->rename($absolute_path, $root_dir."/public/files/".$fileName);
+                $oldFile->setName($fileName);
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($oldFile);
+                $entityManager->flush();
+                return $this->redirectToRoute("home");
+            }
+        } catch (IOExceptionInterface $exception) {
+            var_dump($exception->getMessage());
+            return $this->redirectToRoute("home");
+        }
+    }
+
+    /**
      * @Route("/delete",name="pdf_delete")
      * @param Request $request
      * @param PdfFileRepository $pdfFileRepository
