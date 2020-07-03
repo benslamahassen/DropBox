@@ -7,7 +7,7 @@
             <h1>Welcome to DropBox</h1>
             <p> Create an account now! or Login</p>
         </div>
-        {% if error is defined %}
+        {% if error == true %}
             <div class="alert alert-danger">{{ error }}</div>
         {% endif %}
 

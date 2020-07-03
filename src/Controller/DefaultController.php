@@ -11,7 +11,9 @@ class DefaultController extends AbstractController
 {
     public function index()
     {
-        return $this->render('security/login.html.twig');
+        return $this->render('security/login.html.twig', [
+            'error' => false
+        ]);
     }
 
     /**

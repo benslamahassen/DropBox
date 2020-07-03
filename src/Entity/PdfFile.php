@@ -9,8 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass=FileRepository::class)
- * @Vich\Uploadable
+ * @ORM\Entity(repositoryClass=PdfFileRepository::class)
+ * @Vich\Uploadable()
  */
 class PdfFile
 {
@@ -22,15 +22,13 @@ class PdfFile
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
      */
     private $name;
 
     /**
      * @Vich\UploadableField(mapping="user_file", fileNameProperty="name", size="size")
-     * @Assert\File{
-     *      maxSize="8M",
-     * }
+     * @Assert\File(maxSize="8M")
      * @var File|null
      */
     private $file;
