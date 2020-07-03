@@ -1,23 +1,23 @@
 FROM php:7.4-fpm
 
-RUN docker-php-ext-install pdo_mysql
+RUN apt-get update && apt-get install -y
 
-RUN pecl install apcu
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        git \
+        zlib1g-dev \
+        libxml2-dev \
+        libzip-dev \
+    && docker-php-ext-install \
+        zip \
+        intl \
+		mysqli \
+        pdo pdo_mysql
 
-RUN apt-get update && \
-apt-get install -y \
-libzip-dev
-
-RUN docker-php-ext-install zip
-RUN docker-php-ext-enable apcu
-
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php composer-setup.php --filename=composer \
-    && php -r "unlink('composer-setup.php');" \
-    && mv composer /usr/local/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 
 WORKDIR /usr/src/app
 
-COPY --chown=1000:1000 . /usr/src/app
+COPY . /usr/src/app
 
-RUN PATH=$PATH:/usr/src/apps/vendor/bin:bin
+#CMD php /usr/src/app/bin/console doctrine:database:create user
+#CMD php /usr/src/app/bin/console doctrine:migrations:migrate
