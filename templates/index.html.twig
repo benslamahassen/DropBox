@@ -12,49 +12,85 @@
         <div class="row justify-content-start align-items-baseline">
             {% for file in files %}
                 <div class="col-5 m-2">
-                    <form action="">
-                        <div class="card" style="height: 22vh !important;">
+                    <form action="{{ path('pdf_rename') }}" method="POST">
+                        <div class="card" style="height: 28vh !important;">
                             <div class="card-header">
-                                <input id="nameInput" style="display: none" class="form-control" type="text" name="fileName" value="{{ file.name }}">
-                                <a href="{{path('pdf_download',{'id':file.id})}}" id="fileNameHolder">{{ file.name }}</a>
+                                <input id="{{ "nameInput"~file.id }}" style="display: none" class="form-control"
+                                       type="text" name="fileName" value="{{ file.name }}">
+                                <input type="hidden" name="fileId" value="{{ file.id }}">
+                                <a href="{{ path('pdf_download',{'id':file.id}) }}"
+                                   id="{{ "fileNameHolder"~file.id }}">{{ file.name }}</a>
                             </div>
                             <div class="card-body">
-                                Size: {{ file.size | formatBytes(2) }}
+                                <ul class="list-unstyled m-2">
+                                    <li>
+                                        Size: {{ file.size | formatBytes(2) }}
+                                    </li>
+                                    <li>
+                                        Extension: {{ file.extension }}
+                                    </li>
+                                </ul>
                             </div>
                             <div class="card-footer">
-                                <button type="button" onclick="rename()" id="renameButton" class="btn btn-sm btn-warning">Rename</button>
-                                <button type="button" style="display: none" onclick="cancelRename()" id="cancelRenameButton" class="btn btn-sm btn-danger float-right">Cancel</button>
-                                <form action="">
-                                    <input type="hidden" name="fileId" value="{{ file.id }}">
-                                    <button type="submit" id="deleteButton" class="btn btn-sm btn-danger float-right">Delete</button>
-                                </form>
+                                <div class="d-flex justify-content-between">
+                                    <button type="submit" style="display: none" class="btn btn-sm btn-warning"
+                                            id="{{ "submitButton"~file.id }}">Save
+                                    </button>
+                                    <button type="button" onclick="rename({{ file.id }})"
+                                            id="{{ "renameButton"~file.id }}" class="btn btn-sm btn-warning">Rename
+                                    </button>
+                                    <button type="button" style="display: none" onclick="cancelRename({{ file.id }})"
+                                            id="{{ "cancelRenameButton"~file.id }}"
+                                            class="btn btn-sm btn-danger float-right">Cancel
+                                    </button>
+                                    <button type="button" onclick="deleteFile({{ file.id }})"
+                                            id="{{ "deleteButton"~file.id }}"
+                                            class="btn btn-sm btn-danger float-right">Delete
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </form>
+                    <form id={{ "deleteForm"~file.id }} action="{{ path('pdf_delete') }}" method="POST">
+                        <input type="hidden" name="fileId" value="{{ file.id }}">
+                    </form>
                 </div>
-            {% endfor %}
-            <script>
-                const nameInput = document.getElementById("nameInput");
-                const fileNameHolder = document.getElementById("fileNameHolder");
-                const renameButton = document.getElementById("renameButton");
-                const deleteButton = document.getElementById("deleteButton");
-                const cancelButton = document.getElementById("cancelRenameButton");
+                <script>
+                    function deleteFile(id) {
+                        document.getElementById("deleteForm" + id).submit();
+                    }
 
-                function rename () {
-                    nameInput.style.display = "block";
-                    fileNameHolder.style.display = "none";
-                    renameButton.innerText = "Save";
-                    deleteButton.style.display = "none";
-                    cancelButton.style.display = "block";
-                }
-                function cancelRename() {
-                    nameInput.style.display = "none";
-                    fileNameHolder.style.display = "block";
-                    renameButton.innerText = "Rename";
-                    deleteButton.style.display = "block";
-                    cancelButton.style.display = "none";
-                }
-            </script>
+                    function rename(id) {
+                        const nameInput = document.getElementById("nameInput" + id);
+                        const fileNameHolder = document.getElementById("fileNameHolder" + id);
+                        const renameButton = document.getElementById("renameButton" + id);
+                        const deleteButton = document.getElementById("deleteButton" + id);
+                        const cancelButton = document.getElementById("cancelRenameButton" + id);
+                        const submitButton = document.getElementById("submitButton" + id);
+                        nameInput.style.display = "block";
+                        fileNameHolder.style.display = "none";
+                        renameButton.style.display = "none";
+                        submitButton.style.display = "block";
+                        deleteButton.style.display = "none";
+                        cancelButton.style.display = "block";
+                    }
+
+                    function cancelRename(id) {
+                        const nameInput = document.getElementById("nameInput" + id);
+                        const fileNameHolder = document.getElementById("fileNameHolder" + id);
+                        const renameButton = document.getElementById("renameButton" + id);
+                        const deleteButton = document.getElementById("deleteButton" + id);
+                        const cancelButton = document.getElementById("cancelRenameButton" + id);
+                        const submitButton = document.getElementById("submitButton" + id);
+                        nameInput.style.display = "none";
+                        fileNameHolder.style.display = "block";
+                        submitButton.style.display = "none";
+                        renameButton.style.display = "block"
+                        deleteButton.style.display = "block";
+                        cancelButton.style.display = "none";
+                    }
+                </script>
+            {% endfor %}
         </div>
     {% else %}
         <h1>You have no files.</h1>
