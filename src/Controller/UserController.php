@@ -35,11 +35,10 @@ class  UserController extends AbstractController
             $entityManager->flush();
 
             return $this->render('security/login.html.twig',[
-                'message' => 'Account Creation Successful! Please Login'
+                'message' => 'Account Creation Successful! Please Login',
+                'error' => false,
             ]);
         } catch(\Exception $e){
-            $error = $e->getMessage();
-            var_dump($error);
             return $this->render('security/login.html.twig',[
                 'error' => 'Account Creation Failed!'
             ]);
