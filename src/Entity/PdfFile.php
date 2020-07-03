@@ -68,7 +68,7 @@ class PdfFile
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -89,7 +89,7 @@ class PdfFile
         return $this->file;
     }
 
-    public function setSize(int $size): void
+    public function setSize(?int $size): void
     {
         $this->size = $size;
     }
@@ -104,7 +104,7 @@ class PdfFile
         return $this->extension;
     }
 
-    public function setExtension(string $extension): self
+    public function setExtension(?string $extension): self
     {
         $this->extension = $extension;
 
