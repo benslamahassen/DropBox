@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\PdfFile;
 use App\Form\PdfFileType;
 use App\Repository\PdfFileRepository;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -53,17 +55,34 @@ class PdfFileController extends AbstractController
      */
     public function download($id, PdfFileRepository $pdfFileRepository)
     {
-        $file = $pdfFileRepository->findOneBy(['id' => $id ]);
+        $file = $pdfFileRepository->findOneBy(['id' => $id]);
 
         $response = new Response();
         $response->headers->set('Content-type', 'application/octet-stream');
-        $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', $file->getName() ));
-        $response->setContent(file_get_contents($this->getParameter('kernel.project_dir') ."/public/files/" . $file->getName()));
+        $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', $file->getName()));
+        $response->setContent(file_get_contents($this->getParameter('kernel.project_dir') . "/public/files/" . $file->getName()));
         $response->setStatusCode(200);
         $response->headers->set('Content-Transfer-Encoding', 'binary');
         $response->headers->set('Pragma', 'no-cache');
         $response->headers->set('Expires', '0');
         return $response;
 
+    }
+
+    /**
+     * @Route("/delete",name="pdf_delete")
+     * @param Request $request
+     * @param PdfFileRepository $pdfFileRepository
+     * @return RedirectResponse
+     */
+
+    public function delete(Request $request, PdfFileRepository $pdfFileRepository) {
+        $id = $request->request->get('fileId');
+        $file = $pdfFileRepository->findOneBy(['id' => $id]);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($file);
+        $entityManager->flush();
+        return $this->redirectToRoute("home");
     }
 }
