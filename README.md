@@ -1,4 +1,4 @@
-`cd ./DropBox`
+`cd ./DropBox/docker`
 
 `docker-compose build`
 
