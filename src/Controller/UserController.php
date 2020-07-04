@@ -34,7 +34,7 @@ class  UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->render('security/login.html.twig',[
+            return $this->redirectToRoute('app_login',[
                 'message' => 'Account Creation Successful! Please Login',
                 'error' => false,
             ]);

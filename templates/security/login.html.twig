@@ -11,6 +11,14 @@
             <div class="alert alert-danger">{{ error }}</div>
         {% endif %}
 
+        {% if app.request.get('error') == true %}
+            <div class="alert alert-danger">{{ app.request.get('error') }}</div>
+        {% endif %}
+
+        {% if app.request.get('message') == true %}
+            <div class="alert alert-success">{{ app.request.get('message') }}</div>
+        {% endif %}
+
         {% if message is defined %}
             <div class="alert alert-success">{{ message }}</div>
         {% endif %}
@@ -31,7 +39,7 @@
                  class=" h-100">
                 <div class="card" style="width: 40vw">
                     <div class="card-body">
-                        <form method="post" action="{{ path('app_login') }}">
+                        <form method="POST" action="{{ path('app_login') }}">
                             <h1 class="h3 mb-3 font-weight-normal">Login </h1>
                             <div class="form-group">
                                 <label for="email">Email address</label>
