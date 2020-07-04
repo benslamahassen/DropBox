@@ -18,6 +18,8 @@ RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/lo
 
 WORKDIR /usr/src/app
 
-COPY . /usr/src/app
-
 RUN composer install
+
+RUN php ./bin/console cache:warmup
+
+RUN chmod a+rwx -R /usr/src/app
