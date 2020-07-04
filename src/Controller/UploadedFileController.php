@@ -81,7 +81,6 @@ class UploadedFileController extends AbstractController
     {
         $id = $request->request->get('fileId');
         $fileName = $request->request->get('fileName');
-        var_dump($id);
         $oldFile = $uploadedFileRepository->findOneBy(['id' => $id]);
         $oldName = $oldFile->getName();
         $root_dir = $this->getParameter('kernel.project_dir');
@@ -98,7 +97,6 @@ class UploadedFileController extends AbstractController
                 return $this->redirectToRoute("home");
             }
         } catch (IOExceptionInterface $exception) {
-            var_dump($exception->getMessage());
             return $this->redirectToRoute("home");
         }
     }

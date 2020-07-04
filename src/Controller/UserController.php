@@ -40,7 +40,7 @@ class  UserController extends AbstractController
             ]);
         } catch(\Exception $e){
             return $this->render('security/login.html.twig',[
-                'error' => 'Account Creation Failed!'
+                'error' => $e->getMessage()
             ]);
         }
     }
