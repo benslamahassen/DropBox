@@ -34,4 +34,4 @@ Made with :heart: :smirk:, HBS.
 Read more about Symfony [here](https://www.symfony.com/doc/current/index.html).
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://github.com/benslamahassen/DropBox/blob/master/LICENSE.md)
