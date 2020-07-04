@@ -18,7 +18,21 @@ class PdfFileType extends AbstractType
             ->add('file', VichFileType::class, [
                 'required' => true,
                 'allow_delete' => true,
-                'label' => 'Supported Formats (PDF,PNG,CSV)'
+                'label' => 'Your Data will always be safe with us :)',
+                'constraints' => [
+                    new File([
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/gif',
+                            'image/png',
+                            'text/csv',
+                            'application/pdf',
+                            'application/mp4',
+                            'audio/mp4',
+                            'video/mp4',
+                        ],
+                    ])
+                ]
             ])
             ->add('save', SubmitType::class);
     }
