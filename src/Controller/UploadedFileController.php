@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\PdfFile;
+use App\Entity\UploadedFile;
 use App\Form\PdfFileType;
-use App\Repository\PdfFileRepository;
+use App\Repository\UploadedFileRepository;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PdfFileController extends AbstractController
+class UploadedFileController extends AbstractController
 {
 
     /**
@@ -23,7 +23,7 @@ class PdfFileController extends AbstractController
      */
     public function index(Request $request)
     {
-        $pdf_file = new PdfFile();
+        $pdf_file = new UploadedFile();
         $form = $this->createForm(PdfFileType::class, $pdf_file);
 
         $form->handleRequest($request);
@@ -50,12 +50,12 @@ class PdfFileController extends AbstractController
     /**
      * @Route("/download/{id}",name="pdf_download")
      * @param $id
-     * @param PdfFileRepository $pdfFileRepository
+     * @param UploadedFileRepository $uploadedFileRepository
      * @return Response
      */
-    public function download($id, PdfFileRepository $pdfFileRepository)
+    public function download($id, UploadedFileRepository $uploadedFileRepository)
     {
-        $file = $pdfFileRepository->findOneBy(['id' => $id]);
+        $file = $uploadedFileRepository->findOneBy(['id' => $id]);
 
         $response = new Response();
         $response->headers->set('Content-type', 'application/octet-stream');
@@ -73,16 +73,16 @@ class PdfFileController extends AbstractController
      * @Route("/rename",name="pdf_rename")
      * @param Request $request
      * @param Filesystem $filesystem
-     * @param PdfFileRepository $pdfFileRepository
+     * @param UploadedFileRepository $uploadedFileRepository
      * @return RedirectResponse
      */
 
-    public function rename(Request $request, Filesystem $filesystem, PdfFileRepository $pdfFileRepository)
+    public function rename(Request $request, Filesystem $filesystem, UploadedFileRepository $uploadedFileRepository)
     {
         $id = $request->request->get('fileId');
         $fileName = $request->request->get('fileName');
         var_dump($id);
-        $oldFile = $pdfFileRepository->findOneBy(['id' => $id]);
+        $oldFile = $uploadedFileRepository->findOneBy(['id' => $id]);
         $oldName = $oldFile->getName();
         $root_dir = $this->getParameter('kernel.project_dir');
         $absolute_path = $root_dir."/public/files/".$oldName;
@@ -106,13 +106,13 @@ class PdfFileController extends AbstractController
     /**
      * @Route("/delete",name="pdf_delete")
      * @param Request $request
-     * @param PdfFileRepository $pdfFileRepository
+     * @param UploadedFileRepository $uploadedFileRepository
      * @return RedirectResponse
      */
 
-    public function delete(Request $request, PdfFileRepository $pdfFileRepository) {
+    public function delete(Request $request, UploadedFileRepository $uploadedFileRepository) {
         $id = $request->request->get('fileId');
-        $file = $pdfFileRepository->findOneBy(['id' => $id]);
+        $file = $uploadedFileRepository->findOneBy(['id' => $id]);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($file);

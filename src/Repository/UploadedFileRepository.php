@@ -2,21 +2,21 @@
 
 namespace App\Repository;
 
-use App\Entity\PdfFile;
+use App\Entity\UploadedFile;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method PdfFile|null find($id, $lockMode = null, $lockVersion = null)
- * @method PdfFile|null findOneBy(array $criteria, array $orderBy = null)
- * @method PdfFile[]    findAll()
- * @method PdfFile[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method UploadedFile|null find($id, $lockMode = null, $lockVersion = null)
+ * @method UploadedFile|null findOneBy(array $criteria, array $orderBy = null)
+ * @method UploadedFile[]    findAll()
+ * @method UploadedFile[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PdfFileRepository extends ServiceEntityRepository
+class UploadedFileRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, PdfFile::class);
+        parent::__construct($registry, UploadedFile::class);
     }
 
     // /**

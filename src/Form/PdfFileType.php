@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\PdfFile;
+use App\Entity\UploadedFile;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,7 +26,7 @@ class PdfFileType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => PdfFile::class,
+            'data_class' => UploadedFile::class,
         ]);
     }
 }

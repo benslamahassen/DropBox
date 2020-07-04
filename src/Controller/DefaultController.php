@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\PdfFileRepository;
+use App\Repository\UploadedFileRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,13 +18,13 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/home", name="home")
-     * @param PdfFileRepository $pdfFileRepository
+     * @param UploadedFileRepository $uploadedFileRepository
      * @return Response
      */
-    public function home(PdfFileRepository $pdfFileRepository)
+    public function home(UploadedFileRepository $uploadedFileRepository)
     {
         $user_id = $this->getUser()->getId();
-        $files = $pdfFileRepository->findBy(["user_id" => $user_id]);
+        $files = $uploadedFileRepository->findBy(["user_id" => $user_id]);
         return $this->render('index.html.twig', [
             'files' => $files,
         ]);
