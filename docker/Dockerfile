@@ -19,5 +19,4 @@ WORKDIR /usr/src/app
 
 COPY . /usr/src/app
 
-#CMD php /usr/src/app/bin/console doctrine:database:create user
-#CMD php /usr/src/app/bin/console doctrine:migrations:migrate
+RUN composer install
