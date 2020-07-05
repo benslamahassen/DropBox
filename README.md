@@ -29,6 +29,8 @@ docker exec -it php php ./bin/console doctrine:database:create
 docker exec -it php php ./bin/console doctrine:migrations:migrate
 ```
 
+Now it should be running on port 8090. Go to [localhost:8090](http://localhost:8090)
+
 ## Motivation
 Made with :heart: :smirk:, HBS.
 Read more about Symfony [here](https://www.symfony.com/doc/current/index.html).
